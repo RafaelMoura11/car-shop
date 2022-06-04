@@ -14,20 +14,10 @@ const carSchema = new Schema<CarDocument>({
   seatsQty: Number,
 });
 
-class CarModel implements MongoModel<Car> {
-  constructor(public model = createModel('Cars', carSchema)) {}
-
-  create = async (obj: Car): Promise<Car> => (
-    this.model.create(obj)
-  );
-
-  read = async (): Promise<Car[]> => (
-    this.model.find()
-  );
-
-  readOne = async (_id: string): Promise<Car | null> => (
-    this.model.findOne({ _id })
-  );
+class CarModel extends MongoModel<Car> {
+  constructor(public model = createModel('Cars', carSchema)) {
+    super(model);
+  }
 }
 
 export default CarModel;

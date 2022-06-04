@@ -23,6 +23,7 @@ class CarController extends Controller<Car> {
     const { body } = req;
     try {
       const car = await this.service.create(body);
+      console.log(car);
       if (!car) {
         return res.status(500).json({ error: this.errors.internal });
       }
@@ -67,6 +68,26 @@ class CarController extends Controller<Car> {
     } catch (error) {
       return res.status(500).json({ error: this.errors.internal });
     }
+  };
+
+  updateOne = async (
+    req: Request<{ id: string }>,
+    res: Response<Car | ResponseError>,
+  ): Promise<typeof res> => {
+    const { id } = req.params;
+    const { body } = req;
+    if (id.length < 24) {
+      return res.status(400).json({ error: this.errors.idLenght });
+    }
+    const car = await this.service.updateOne(id, body as Car);
+    if (!car) {
+      return res.status(404).json({ error: this.errors.notFound });
+    }
+    if ('error' in car) {
+      return res.status(400).json(car);
+    }
+    return car
+      ? res.json(car) : res.status(404).json({ error: this.errors.notFound });
   };
 }
 
