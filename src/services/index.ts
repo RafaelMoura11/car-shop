@@ -22,7 +22,7 @@ abstract class Service<T> {
   }
 
   public async updateOne(id: string, obj: T): Promise<T | null | ServiceError> {
-    return this.model.updateOne(id, obj);
+    return this.model.update(id, obj);
   }
 }
 

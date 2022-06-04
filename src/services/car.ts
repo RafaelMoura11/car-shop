@@ -15,7 +15,7 @@ class CarService extends Service<Car> {
     return this.model.create(obj);
   };
 
-  updateOne = async (
+  update = async (
     id: string,
     obj: Car,
   ): Promise<Car | ServiceError | null> => {
@@ -23,7 +23,7 @@ class CarService extends Service<Car> {
     if (!parsed.success) { 
       return { error: parsed.error };
     }
-    return this.model.updateOne(id, obj);
+    return this.model.update(id, obj);
   };
 }
 
