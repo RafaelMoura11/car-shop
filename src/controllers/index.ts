@@ -14,6 +14,7 @@ enum ControllerErrors {
   notFound = 'Object not found',
   requiredId = 'Id is required',
   badRequest = 'Bad request',
+  idLenght = 'Id must have 24 hexadecimal characters',
 }
 
 abstract class Controller<T> {
