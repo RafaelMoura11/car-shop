@@ -15,6 +15,7 @@ enum ControllerErrors {
   requiredId = 'Id is required',
   badRequest = 'Bad request',
   idLenght = 'Id must have 24 hexadecimal characters',
+  bodyEmpty = 'Body is empty',
 }
 
 abstract class Controller<T> {
@@ -42,6 +43,11 @@ abstract class Controller<T> {
   };
 
   abstract readOne(
+    req: Request<{ id: string } & { obj: T }>,
+    res: Response<T | ResponseError>
+  ): Promise<typeof res>;
+
+  abstract updateOne(
     req: Request<{ id: string; }>,
     res: Response<T | ResponseError>
   ): Promise<typeof res>;
