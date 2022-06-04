@@ -1,7 +1,19 @@
-interface Model<T> {
-  create(obj: T): Promise<T>,
-  read(): Promise<T[]>,
-  readOne(id_: string): Promise<T | null>,
+import { Model as M, Document } from 'mongoose';
+import { Model } from '../interfaces/ModelInterface';
+
+abstract class MongoModel<T> implements Model<T> {
+  constructor(protected model: M<T & Document>) { }
+
+  create = async (obj: T): Promise<T> => this.model.create({ ...obj });
+
+  read = async (): Promise<T[]> => this.model.find();
+
+  readOne = async (id: string): Promise<T | null> =>
+    this.model.findOne({ _id: id });
+
+  updateOne = async (_id: string, obj: T): Promise<T | null> => (
+    this.model.findByIdAndUpdate({ _id }, obj)
+  );
 }
 
-export default Model;
+export default MongoModel;
