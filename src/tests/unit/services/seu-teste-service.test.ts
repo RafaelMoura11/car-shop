@@ -65,4 +65,17 @@ describe('Testando Service de car', () => {
       expect(car).to.be.deep.equal(arrayOfCars[0]);
     })
   })
+  describe('Testando função create', () => {
+    before(() => {
+      sinon.stub(carModel, 'create').resolves(arrayOfCars[0]);
+    })
+    after(() => {
+      (carModel.create as sinon.SinonStub).restore();
+    })
+
+    it('Verifica retorno de create', async () => {
+      const createdCar = await carService.create(arrayOfCars[0]);
+      expect(createdCar).to.be.deep.equal(arrayOfCars[0]);
+    })
+  })
 })
