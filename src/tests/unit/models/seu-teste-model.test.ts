@@ -45,9 +45,22 @@ describe('Testando model de car', () => {
       (Model.find as sinon.SinonStub).restore();
     })
 
-    it('Verifica retorno', async () => {
+    it('Verifica retorno de read', async () => {
       const cars = await carModel.read();
       expect(cars).to.be.deep.equal(arrayOfCars);
+    })
+  })
+  describe('Testando função readOne', () => {
+    before(() => {
+      sinon.stub(Model, 'findOne').resolves(arrayOfCars[0]);
+    })
+    after(() => {
+      (Model.findOne as sinon.SinonStub).restore();
+    })
+
+    it('Verifica retorno de readOne', async () => {
+      const car = await carModel.readOne(arrayOfCars[0]._id as unknown as string);
+      expect(car).to.be.deep.equal(arrayOfCars[0]);
     })
   })
 })
